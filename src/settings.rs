@@ -1,4 +1,4 @@
-use config::{Config, ConfigError, Environment, File};
+use config::{Config, ConfigError, Environment /*, File*/};
 use serde::Deserialize;
 use std::str::FromStr;
 
@@ -17,7 +17,7 @@ pub struct ApiSettings {
 #[derive(Debug, Deserialize)]
 pub struct MinioSettings {
     pub user: String,
-    pub password: u16,
+    pub password: String,
 }
 
 
@@ -26,6 +26,7 @@ pub struct Settings {
     pub env: String,
     pub api: ApiSettings,
     pub auth: AuthSettings,
+    pub minio: MinioSettings,
 }
 
 impl Settings {
@@ -33,7 +34,7 @@ impl Settings {
     pub fn new() -> Result<Self, ConfigError> {
 
         let config = Config::builder()
-            .add_source(File::with_name("server/config/default.toml"))
+            // .add_source(File::with_name("server/config/default.toml"))
             .add_source(
                 Environment::default()
                     .prefix("ASSETS_MANAGER")
